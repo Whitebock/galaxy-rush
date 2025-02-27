@@ -1,0 +1,27 @@
+[gd_scene load_steps=5 format=3 uid="uid://5ag3ulfieiu6"]
+
+[ext_resource type="Script" path="res://game/projectile.gd" id="1_gpd8y"]
+
+[sub_resource type="Gradient" id="Gradient_kp244"]
+offsets = PackedFloat32Array(0, 0.5, 1)
+colors = PackedColorArray(0.6, 0.458824, 0.466667, 1, 0.964706, 0.839216, 0.741176, 1, 0.964706, 0.839216, 0.741176, 1)
+metadata/_snap_enabled = true
+metadata/_snap_count = 2
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_swv3m"]
+gradient = SubResource("Gradient_kp244")
+width = 3
+height = 2
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_mj341"]
+size = Vector2(3, 2)
+
+[node name="Projectile" type="Area2D"]
+script = ExtResource("1_gpd8y")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = SubResource("GradientTexture2D_swv3m")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+visible = false
+shape = SubResource("RectangleShape2D_mj341")

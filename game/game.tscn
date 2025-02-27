@@ -1,0 +1,290 @@
+[gd_scene load_steps=26 format=3 uid="uid://c3tdbwl357h3r"]
+
+[ext_resource type="Script" path="res://game/ui.gd" id="1_2rv3w"]
+[ext_resource type="Texture2D" uid="uid://bukqyawvm76db" path="res://assets/sprites/stars_0001.png" id="1_dgm61"]
+[ext_resource type="PackedScene" uid="uid://j8np70asg7j3" path="res://game/ship.tscn" id="2_gm6o2"]
+[ext_resource type="Texture2D" uid="uid://dpaej06rk76ts" path="res://assets/sprites/stars_0002.png" id="2_hve86"]
+[ext_resource type="Texture2D" uid="uid://dl831it0csqxr" path="res://assets/sprites/ui.png" id="3_soack"]
+[ext_resource type="Texture2D" uid="uid://bagyk8jcgnpn4" path="res://assets/sprites/end_galaxy.png" id="3_w1lff"]
+[ext_resource type="AudioStream" uid="uid://cxeqwvdekbx8v" path="res://assets/sounds/Retro Event 49.wav" id="5_5fr21"]
+[ext_resource type="Script" path="res://game/spawner.gd" id="5_yswdt"]
+[ext_resource type="AudioStream" uid="uid://bjxn82bltnsy0" path="res://assets/sounds/Retro Event Wrong Echo 03.wav" id="6_vv0jt"]
+
+[sub_resource type="Gradient" id="Gradient_dx71b"]
+offsets = PackedFloat32Array(0)
+colors = PackedColorArray(0.0313726, 0.0784314, 0.117647, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_b3bso"]
+gradient = SubResource("Gradient_dx71b")
+width = 320
+height = 180
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_vki4k"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_dgm61")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_hve86")
+}],
+"loop": true,
+"name": &"default",
+"speed": 2.0
+}]
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_324dp"]
+load_path = "res://.godot/imported/ui.png-219fdf4f718d513f7b6099df76577a78.ctex"
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_nhy4b"]
+atlas = SubResource("CompressedTexture2D_324dp")
+region = Rect2(2, 37, 5, 5)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kx236"]
+atlas = ExtResource("3_soack")
+region = Rect2(2, 21, 33, 5)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cq2jo"]
+atlas = ExtResource("3_soack")
+region = Rect2(2, 31, 33, 5)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qiqbf"]
+atlas = ExtResource("3_soack")
+region = Rect2(2, 26, 33, 5)
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_q3woc"]
+load_path = "res://.godot/imported/ui.png-219fdf4f718d513f7b6099df76577a78.ctex"
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_p7rcb"]
+atlas = SubResource("CompressedTexture2D_q3woc")
+region = Rect2(8, 37, 5, 5)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_nymjl"]
+atlas = ExtResource("3_soack")
+region = Rect2(2, 45, 16, 25)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_15bfd"]
+size = Vector2(232, 55)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_0voxe"]
+size = Vector2(200, 55)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_aeg7u"]
+atlas = ExtResource("3_soack")
+region = Rect2(19, 45, 17, 17)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_emw0c"]
+radius = 40.0
+
+[sub_resource type="LabelSettings" id="LabelSettings_fnskc"]
+font_size = 32
+font_color = Color(0.964706, 0.839216, 0.741176, 1)
+
+[node name="Game" type="Node2D"]
+
+[node name="Background" type="Parallax2D" parent="."]
+repeat_size = Vector2(320, 0)
+autoscroll = Vector2(-1, 0)
+
+[node name="Solid" type="Sprite2D" parent="Background"]
+texture = SubResource("GradientTexture2D_b3bso")
+centered = false
+
+[node name="Stars" type="AnimatedSprite2D" parent="Background"]
+sprite_frames = SubResource("SpriteFrames_vki4k")
+autoplay = "default"
+frame_progress = 0.297224
+centered = false
+
+[node name="UI" type="CanvasLayer" parent="."]
+script = ExtResource("1_2rv3w")
+
+[node name="Health" type="HBoxContainer" parent="UI"]
+offset_left = 5.0
+offset_top = 5.0
+offset_right = 38.0
+offset_bottom = 10.0
+
+[node name="Icon" type="TextureRect" parent="UI/Health"]
+layout_mode = 2
+texture = SubResource("AtlasTexture_nhy4b")
+
+[node name="Value" type="TextureProgressBar" parent="UI/Health"]
+layout_mode = 2
+max_value = 10.0
+value = 10.0
+stretch_margin_left = 2
+stretch_margin_top = 2
+stretch_margin_right = 2
+stretch_margin_bottom = 2
+texture_under = SubResource("AtlasTexture_kx236")
+texture_over = SubResource("AtlasTexture_cq2jo")
+texture_progress = SubResource("AtlasTexture_qiqbf")
+
+[node name="Progress" type="HBoxContainer" parent="UI"]
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -47.0
+offset_top = 5.0
+offset_right = -5.0
+offset_bottom = 10.0
+grow_horizontal = 0
+
+[node name="Icon" type="TextureRect" parent="UI/Progress"]
+layout_mode = 2
+texture = SubResource("AtlasTexture_p7rcb")
+
+[node name="Value" type="TextureProgressBar" parent="UI/Progress"]
+layout_mode = 2
+max_value = 30.0
+stretch_margin_left = 2
+stretch_margin_top = 2
+stretch_margin_right = 2
+stretch_margin_bottom = 2
+texture_under = SubResource("AtlasTexture_kx236")
+texture_over = SubResource("AtlasTexture_cq2jo")
+texture_progress = SubResource("AtlasTexture_qiqbf")
+
+[node name="Mobile_Controls" type="MarginContainer" parent="UI"]
+modulate = Color(1, 1, 1, 0.807843)
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 4
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 8
+theme_override_constants/margin_bottom = 8
+
+[node name="Up" type="TouchScreenButton" parent="UI/Mobile_Controls"]
+position = Vector2(4, 115)
+texture_normal = SubResource("AtlasTexture_nymjl")
+shape = SubResource("RectangleShape2D_15bfd")
+shape_centered = false
+shape_visible = false
+passby_press = true
+action = "ship_up"
+visibility_mode = 1
+
+[node name="Down" type="TouchScreenButton" parent="UI/Mobile_Controls"]
+position = Vector2(20, 172)
+rotation = -3.14159
+texture_normal = SubResource("AtlasTexture_nymjl")
+shape = SubResource("RectangleShape2D_0voxe")
+shape_centered = false
+shape_visible = false
+passby_press = true
+action = "ship_down"
+visibility_mode = 1
+
+[node name="Shoot" type="TouchScreenButton" parent="UI/Mobile_Controls"]
+position = Vector2(288, 146)
+texture_normal = SubResource("AtlasTexture_aeg7u")
+shape = SubResource("CircleShape2D_emw0c")
+shape_visible = false
+passby_press = true
+action = "ship_shoot"
+visibility_mode = 1
+
+[node name="GameOver_Popup" type="PanelContainer" parent="UI"]
+process_mode = 3
+visible = false
+custom_minimum_size = Vector2(220, 140)
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -110.0
+offset_top = -70.0
+offset_right = 110.0
+offset_bottom = 70.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Margin" type="MarginContainer" parent="UI/GameOver_Popup"]
+layout_mode = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 10
+
+[node name="PopupContent" type="VBoxContainer" parent="UI/GameOver_Popup/Margin"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="Header" type="Label" parent="UI/GameOver_Popup/Margin/PopupContent"]
+layout_mode = 2
+size_flags_vertical = 0
+text = "Game Over"
+label_settings = SubResource("LabelSettings_fnskc")
+horizontal_alignment = 1
+
+[node name="Label" type="Label" parent="UI/GameOver_Popup/Margin/PopupContent"]
+custom_minimum_size = Vector2(100, 60)
+layout_mode = 2
+size_flags_vertical = 3
+horizontal_alignment = 1
+autowrap_mode = 2
+
+[node name="Back" type="Button" parent="UI/GameOver_Popup/Margin/PopupContent"]
+visible = false
+custom_minimum_size = Vector2(60, 0)
+layout_mode = 2
+size_flags_horizontal = 4
+text = "Menu"
+
+[node name="Continue" type="Button" parent="UI/GameOver_Popup/Margin/PopupContent"]
+visible = false
+custom_minimum_size = Vector2(60, 0)
+layout_mode = 2
+size_flags_horizontal = 4
+text = "Continue"
+
+[node name="VictorySound" type="AudioStreamPlayer" parent="UI/GameOver_Popup"]
+unique_name_in_owner = true
+stream = ExtResource("5_5fr21")
+volume_db = -8.0
+bus = &"UI"
+
+[node name="LossSound" type="AudioStreamPlayer" parent="UI/GameOver_Popup"]
+unique_name_in_owner = true
+stream = ExtResource("6_vv0jt")
+bus = &"UI"
+
+[node name="Projectiles" type="Node" parent="."]
+unique_name_in_owner = true
+
+[node name="Spawner" type="Node" parent="."]
+script = ExtResource("5_yswdt")
+
+[node name="SpawnTimer" type="Timer" parent="Spawner"]
+unique_name_in_owner = true
+wait_time = 0.1
+autostart = true
+
+[node name="Galaxy" type="Sprite2D" parent="."]
+unique_name_in_owner = true
+position = Vector2(320, 0)
+scale = Vector2(4, 4)
+texture = ExtResource("3_w1lff")
+centered = false
+
+[node name="Ship" parent="." node_paths=PackedStringArray("projectile_pool") instance=ExtResource("2_gm6o2")]
+unique_name_in_owner = true
+position = Vector2(30, 90)
+projectile_pool = NodePath("../Projectiles")
+
+[node name="RoundTimer" type="Timer" parent="."]
+unique_name_in_owner = true
+wait_time = 60.0
+one_shot = true
+autostart = true
+
+[connection signal="pressed" from="UI/GameOver_Popup/Margin/PopupContent/Back" to="UI" method="_on_back_pressed"]
+[connection signal="pressed" from="UI/GameOver_Popup/Margin/PopupContent/Continue" to="UI" method="_on_continue_pressed"]
+[connection signal="timeout" from="Spawner/SpawnTimer" to="Spawner" method="_on_spawn_timer_timeout"]
+[connection signal="timeout" from="RoundTimer" to="UI" method="_on_timer_timeout"]
+[connection signal="timeout" from="RoundTimer" to="Spawner" method="_on_round_timer_timeout"]
+[connection signal="timeout" from="RoundTimer" to="Ship" method="_on_round_timer_timeout"]

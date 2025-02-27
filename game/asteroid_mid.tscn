@@ -1,0 +1,74 @@
+[gd_scene load_steps=11 format=3 uid="uid://c6uh6d1b7w85r"]
+
+[ext_resource type="Script" path="res://game/asteroid.gd" id="1_75yfm"]
+[ext_resource type="Texture2D" uid="uid://5inr6k2d2ii" path="res://assets/sprites/asteroids.png" id="2_xd63h"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_51hf0"]
+atlas = ExtResource("2_xd63h")
+region = Rect2(0, 32, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qx6u3"]
+atlas = ExtResource("2_xd63h")
+region = Rect2(32, 32, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2go4x"]
+atlas = ExtResource("2_xd63h")
+region = Rect2(64, 32, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_sjq1p"]
+atlas = ExtResource("2_xd63h")
+region = Rect2(96, 32, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2n8yu"]
+atlas = ExtResource("2_xd63h")
+region = Rect2(128, 32, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6f6v2"]
+atlas = ExtResource("2_xd63h")
+region = Rect2(160, 32, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_ty3pm"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_51hf0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qx6u3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2go4x")
+}],
+"loop": false,
+"name": &"default",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_sjq1p")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2n8yu")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6f6v2")
+}],
+"loop": false,
+"name": &"destroy",
+"speed": 5.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_heogb"]
+radius = 13.0
+
+[node name="Astroid" type="Area2D"]
+script = ExtResource("1_75yfm")
+health = 10
+
+[node name="AnimatedSprite" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_ty3pm")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_heogb")
+
+[connection signal="area_shape_entered" from="." to="." method="_on_area_shape_entered"]

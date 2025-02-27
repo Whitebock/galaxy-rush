@@ -1,0 +1,75 @@
+[gd_scene load_steps=11 format=3 uid="uid://duxtwuxih15iy"]
+
+[ext_resource type="Script" path="res://game/asteroid.gd" id="1_vy0ie"]
+[ext_resource type="Texture2D" uid="uid://5inr6k2d2ii" path="res://assets/sprites/asteroids.png" id="2_rfs12"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_noyao"]
+atlas = ExtResource("2_rfs12")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ai3wv"]
+atlas = ExtResource("2_rfs12")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ujiyb"]
+atlas = ExtResource("2_rfs12")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4fs8f"]
+atlas = ExtResource("2_rfs12")
+region = Rect2(96, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_k2meh"]
+atlas = ExtResource("2_rfs12")
+region = Rect2(128, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dkpks"]
+atlas = ExtResource("2_rfs12")
+region = Rect2(160, 0, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_sy1qf"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_noyao")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ai3wv")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ujiyb")
+}],
+"loop": false,
+"name": &"default",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4fs8f")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_k2meh")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_dkpks")
+}],
+"loop": false,
+"name": &"destroy",
+"speed": 5.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_heogb"]
+radius = 5.09902
+
+[node name="Astroid" type="Area2D"]
+script = ExtResource("1_vy0ie")
+health = 1
+speed = 2
+
+[node name="AnimatedSprite" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_sy1qf")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_heogb")
+
+[connection signal="area_shape_entered" from="." to="." method="_on_area_shape_entered"]
